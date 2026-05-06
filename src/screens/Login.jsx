@@ -6,7 +6,7 @@ const Login = () => {
     return(
         <>
         {/* <FormLoginWithHook titleForm={"welcome to fullstack program"} /> */}
-        <FormLoginWithMotion titleForm="Welcome to FullStack program" />
+        <FormLoginWithMotion titleForm="SISTEMA DE EVALUACION DOCENTE" />
         </>
     );
 };
