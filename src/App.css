@@ -157,4 +157,15 @@
 .text_area{
   align-content: end;  
   margin-bottom: 20px;
+} 
+.btn2 {
+  position: absolute; /* O 'fixed' si quieres que te siga al hacer scroll */
+  top: 15px;         /* Espacio desde la parte superior */
+  right: 15px;       /* Espacio desde la derecha */
+  padding: 10px 15px;
+  background-color: #3862ec;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }

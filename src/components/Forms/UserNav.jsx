@@ -19,7 +19,7 @@ const UserNav = () => {
     const onShowModal = () => {
         setShowModal(true);        
     };
-
+ 
     return (
         <>
         <ModalInfo visible={showModal} 
@@ -29,7 +29,7 @@ const UserNav = () => {
             {isLoggedIn ? (
                 <>
                 <span>Bienvenido, </span>
-                <button className="btn" onClick={ onShowModal }>Logout</button>
+                <button className="btn2" onClick={ onShowModal }>Cerrar Sesión</button>
                 </>
             ) : (
                 <span></span>

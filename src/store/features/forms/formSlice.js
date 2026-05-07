@@ -1,14 +1,13 @@
+
 import { createSlice } from '@reduxjs/toolkit';
 
-// formulario
 const initialState = {
+    // Sincronizamos con los campos que usas en el componente: username, password, rol
     formData: {
-        module: 'React Mod7',
         username: '',
-        email: '',
-        password: 'mod7USIP-ERICK'
+        password: 'esma2026',
+        rol: '',
     },
-    //autenticación
     isLoggedIn: false, 
 };
 
@@ -16,35 +15,34 @@ const formSlice = createSlice({
     name: 'form',
     initialState,
     reducers: {
-        //actualizar los datos del formulario
+        // CORRECCIÓN: Ahora puede recibir un objeto completo o un campo específico
         updateForm(state, action) {
             const { field, value } = action.payload;
-            state.formData[field] = value;
+            
+            // Si mandas { field: 'formData', value: {...} } como haces en tu componente
+            if (field === 'formData') {
+                state.formData = { ...state.formData, ...value };
+            } else {
+                // Si mandas un campo individual
+                state.formData[field] = value;
+            }
         },
-        //reiniciar el formulario
+        
         resetForm(state) {
-            state.formData = {
-                module: '',
-                username: '',
-                email: '',
-                password: ''
-            };
-            state.formData.formData = {
-                module: '',
-                username: '',
-                email: '',
-                password: ''
-            };
+            state.formData = initialState.formData;
         },
+
         login: (state) => {
             state.isLoggedIn = true;
         },
+
         logout: (state) => {
-            state.isLoggedIn = false;            
+            state.isLoggedIn = false;
+            // Opcional: limpiar datos al cerrar sesión
+            state.formData = initialState.formData;
         },
     }
 });
 
-// exportar
 export const { updateForm, resetForm, login, logout } = formSlice.actions;
 export default formSlice.reducer;

@@ -33,8 +33,11 @@ return (
                     X
                 </button>
             </motion.div>
+            
         </div>
+        
     );
+    
 };
 
 export default ModalInfo;
