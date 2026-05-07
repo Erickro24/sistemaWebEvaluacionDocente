@@ -6,10 +6,7 @@ const Navigator = () =>{
             <Link to="/" className="nav-link">LandinPage</Link>
             <Link to="home" className="nav-link">Home</Link>
             <Link to="/login" className="nav-link">Login</Link>
-            <Link to="/counter" className="nav-link">Counter</Link>
-            <Link to="/think" className="nav-link">Think</Link>
-            <Link to="/product" className="nav-link">Product</Link>
-            <Link to="/about" className="nav-link">About</Link>
+            <Link to="/convocatoria" className="nav-link">Convocatoria</Link>
             <div className="nav-user"><UserNav></UserNav></div>
        </nav> 
     )
