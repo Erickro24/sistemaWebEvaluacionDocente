@@ -1,10 +1,6 @@
 
 import { useState } from 'react'
 import './App.css'
-// import Default from './components/default.jsx';
-
-
-// import Home from '/src/screens/Home.jsx';
 
 
 import Navigator from './components/Navigation/Navigator.jsx'
