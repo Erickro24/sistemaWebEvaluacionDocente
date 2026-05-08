@@ -137,7 +137,15 @@
   position: relative;
 }
 .container2 {
-  background-color: #1a96e9;
+  background-color:  #2D4E76;
+  color: white;
+  height: 100px;
+  justify-content: center ;
+  align-items: center;
+  display: flex;
+}
+.container3 {
+  background-color:  #2766b2;
   color: white;
   height: 100px;
   justify-content: center ;
@@ -168,4 +176,15 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+.form-container {
+    background-color: #1e1e1e; /* Un gris oscuro elegante */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(56, 54, 54, 0.712); /* Sombra para dar profundidad */
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #ffffff;
 }

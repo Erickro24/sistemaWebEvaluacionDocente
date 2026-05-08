@@ -67,6 +67,7 @@ const Think = ({ titleForm = "Login" }) => {
                     <h3>{titleForm}</h3>
                 </motion.div>
 
+            <div className="form-container">
                 {/* Selector de ROL */}
                 <motion.div initial={{ x: -100 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
                     <div className="text_area">
@@ -78,7 +79,7 @@ const Think = ({ titleForm = "Login" }) => {
                                 onChange={handleChange} 
                                 required
                                 style={{ width: '100%', padding: '10px' }}
-                            >
+                                >
                                 <option value="">Seleccione su rol</option>
                                 <option value="administrativo">Administrativo</option>
                                 <option value="docente">Docente</option>
@@ -99,7 +100,7 @@ const Think = ({ titleForm = "Login" }) => {
                                 value={formData.username} 
                                 onChange={handleChange} 
                                 required 
-                            />
+                                />
                         </label>
                     </div>
                 </motion.div>
@@ -115,7 +116,7 @@ const Think = ({ titleForm = "Login" }) => {
                                 value={formData.password} 
                                 onChange={handleChange} 
                                 required 
-                            />
+                                />
                             <button type="button" onClick={togglePasswordVisibility} className="button-visibility">
                                 {showPassword ? 'Hide' : 'Show'}
                             </button>
@@ -128,6 +129,7 @@ const Think = ({ titleForm = "Login" }) => {
                         <button className="btn" type="submit">Login</button>
                     </div>
                 </motion.div>
+            </div>
             </form>
         </motion.div>
     );

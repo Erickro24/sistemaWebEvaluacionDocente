@@ -12,7 +12,7 @@ const Contactos = () => {
   return (
     <div className="max-w-6xl mx-auto p-4 font-sans text-gray-800">
       {/* Título Superior */}
-      <div className="bg-red-50 py-2 mb-6 border-b border-red-200">
+      <div className="container3">
         <h1 className="text-center text-2xl font-bold text-red-800">Contactos</h1>
       </div>
 
@@ -27,17 +27,19 @@ const Contactos = () => {
               {/* FOTO: Asegúrate de que estudianm.jpg esté en la carpeta /public de tu proyecto */}
               <div className="mb-4 overflow-hidden rounded-lg bg-gray-800">
                 <img 
-                  src="./public/estudianm.jpg" 
+                  src="./estudianm.jpg" 
                   alt="Escuela Marítima" 
                   className="mx-auto h-40 w-full object-cover" 
                   onError={(e) => { e.target.src = "https://placeholder.com"; }}
                 />
               </div>
 
+              <div className='linea'></div>
               <h2 className="font-bold text-lg">Escuela Marítima</h2>
               <p className="text-sm text-gray-400">Calle Juaristi Eguino Nro. 400 Ex- Escuela Naval Militar (lado de la Terminal de Buses de La Paz)</p>
               <p className="text-sm text-gray-400">La Paz, Bolivia</p>
               <p className="mt-2 text-red-400">Tel: 2282737</p>
+              
               
               {/* MAPA DE GOOGLE (Corregido para Iframe) */}
               <div className="mt-4 h-64 bg-gray-700 rounded-lg overflow-hidden shadow-inner">
@@ -48,7 +50,6 @@ const Contactos = () => {
                 allowFullScreen="" 
                 loading="lazy" 
                 />
-
               </div>
             </div>
 
@@ -87,17 +88,6 @@ const Contactos = () => {
                 {...register("email", { required: true })}
                 className="w-full border p-2 rounded focus:ring-2 focus:ring-red-400 outline-none"
               />
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold mb-1">Ciudad *</label>
-              <select 
-                {...register("ciudad", { required: true })}
-                className="w-full border p-2 rounded bg-white"
-              >
-                <option value="">Seleccione</option>
-                <option value="lp">La Paz</option>
-              </select>
             </div>
 
             <div>
