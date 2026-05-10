@@ -28,7 +28,7 @@ const UserNav = () => {
             />
             {isLoggedIn ? (
                 <>
-                <span>Bienvenido, </span>
+                <span>Bienvenido </span>
                 <button className="btn2" onClick={ onShowModal }>Cerrar Sesión</button>
                 </>
             ) : (

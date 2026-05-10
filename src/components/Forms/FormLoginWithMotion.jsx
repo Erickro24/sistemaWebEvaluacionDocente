@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { updateForm, login } from '../../store/features/forms/formSlice.js';
+import axios from 'axios';
 
 // eslint-disable-next-line react/prop-types
 const Think = ({ titleForm = "Login" }) => {
@@ -20,27 +21,66 @@ const Think = ({ titleForm = "Login" }) => {
     const [showModal, setShowModal] = useState(false);
     const [showModalError, setShowModalError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = async (e) => {
 
-        // Validación: Password correcto y Rol seleccionado
-        if (formData.password === 'esma2026' && formData.rol) {
-            dispatch(updateForm({ field: 'formData', value: formData }));
+    e.preventDefault();
+
+    try {
+
+        const response = await axios.post(
+            'http://localhost:4000/api/auth/login',
+            {
+                email: formData.username,
+                password: formData.password,
+                rol: formData.rol
+            }
+        );
+
+        const data = response.data;
+        localStorage.setItem('token', data.token);
+
+        console.log(
+        "TOKEN GUARDADO:",
+        localStorage.getItem("token")
+        );
+        console.log("LOGIN RESPONSE:", data);
+        if (data.success) {
+
+            localStorage.setItem('token', data.token);
+
+            localStorage.setItem(
+                'user',
+                JSON.stringify(data.user)
+            );
+
             dispatch(login());
-            
-            localStorage.setItem("rol", formData.rol);
+
             setShowModal(true);
 
             setTimeout(() => {
-                if (formData.rol === "administrativo") navigate("/admin");
-                else if (formData.rol === "docente") navigate("/docente");
-                else if (formData.rol === "estudiante") navigate("/estudiante");
-            }, 1500);
 
-        } else {
-            setShowModalError(true);
+                if (data.user.rol === 'administrativo') {
+                    navigate('/admin');
+                }
+
+                else if (data.user.rol === 'docente') {
+                    navigate('/docente');
+                }
+
+                else if (data.user.rol === 'estudiante') {
+                    navigate('/estudiante');
+                }
+
+            }, 1500);
         }
-    };
+
+    } catch (error) {
+
+        console.error(error);
+
+        setShowModalError(true);
+    }
+};
 
     const togglePasswordVisibility = () => setShowPassword(!showPassword);
 

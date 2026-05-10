@@ -188,3 +188,30 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #ffffff;
 }
+.app{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+}
+.datos{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.datos input{
+  width: 300px;
+  height: 30px;
+  font-size: 15px;
+  padding-left: 10px;
+  border-radius: 5px;
+}
+.datos select{
+  width: 100px;
+  height: 30px;
+  font-size: 15px; 
+  padding-left: 10px;
+  border-radius: 5px;
+}
