@@ -1,23 +1,24 @@
-import { Link } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 
 const Sidebar = ({ links }) => {
 
     return (
-
         <div className="sidebar">
 
-            <h2>Sistema ESMA</h2>
+            <h2>Panel</h2>
 
             {
                 links.map((link, index) => (
 
-                    <Link
+                    <NavLink
                         key={index}
                         to={link.path}
-                        className="sidebar-link"
+                        className={({ isActive }) =>
+                            isActive ? 'active-link' : 'link'
+                        }
                     >
                         {link.label}
-                    </Link>
+                    </NavLink>
                 ))
             }
 
