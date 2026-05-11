@@ -1,5 +1,4 @@
 import Home from '../../screens/Home.jsx';
-import Convocatorias from '../../screens/Convocatorias.jsx';
 import Login from '../../screens/Login.jsx';
 import Contactos from '../../screens/Contactos.jsx';
 
@@ -34,7 +33,6 @@ const Router = () => {
             <Route path="/" element={<Navigate to="/home" />} />
             <Route path="login" element={<Login />} />
             <Route path="home" element={<Home />} />
-            <Route path="convocatorias" element={<Convocatorias />} />
             <Route path="contactos" element={<Contactos />} />
 
              {/* ADMIN */}

@@ -1,178 +1,251 @@
 import { motion } from "motion/react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  InputGroup,
+  Spinner
+} from "react-bootstrap";
+
+import {
+  BsPersonFill,
+  BsLockFill,
+  BsEyeFill,
+  BsEyeSlashFill,
+  BsShieldLockFill
+} from "react-icons/bs";
+
 import useForm from "../Hooks/useForm.js";
 import ModalSuccess from "../../components/Modals/ModalSuccess.jsx";
 import ModalError from "../../components/Modals/ModalError.jsx";
-import { useState } from "react";
-import { useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
-import { updateForm, login } from '../../store/features/forms/formSlice.js';
-import axios from 'axios';
+import { login } from "../../store/features/forms/formSlice.js";
 
-// eslint-disable-next-line react/prop-types
-const Think = ({ titleForm = "Login" }) => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const { formData, handleChange } = useForm({
-        username: '',
-        password: '',
-        rol: '' 
-    });
+import "./login.css";
+  /* eslint-disable react/prop-types */
+  const Think = ({ titleForm = "BIENVENIDOS AL SISTEMA DE EVALUACIÓN DOCENTE" }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const [showModal, setShowModal] = useState(false);
-    const [showModalError, setShowModalError] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
-    const handleSubmit = async (e) => {
+  const { formData, handleChange } = useForm({
+    username: "",
+    password: "",
+    rol: ""
+  });
 
+  const [showModal, setShowModal] = useState(false);
+  const [showModalError, setShowModalError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     try {
+      const response = await axios.post("http://localhost:4000/api/auth/login", {
+        email: formData.username,
+        password: formData.password,
+        rol: formData.rol
+      });
 
-        const response = await axios.post(
-            'http://localhost:4000/api/auth/login',
-            {
-                email: formData.username,
-                password: formData.password,
-                rol: formData.rol
-            }
-        );
+      const data = response.data;
 
-        const data = response.data;
-        localStorage.setItem('token', data.token);
+      if (data.success) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
 
-        console.log(
-        "TOKEN GUARDADO:",
-        localStorage.getItem("token")
-        );
-        console.log("LOGIN RESPONSE:", data);
-        if (data.success) {
+        dispatch(login());
+        setShowModal(true);
 
-            localStorage.setItem('token', data.token);
-
-            localStorage.setItem(
-                'user',
-                JSON.stringify(data.user)
-            );
-
-            dispatch(login());
-
-            setShowModal(true);
-
-            setTimeout(() => {
-
-                if (data.user.rol === 'administrativo') {
-                    navigate('/admin');
-                }
-
-                else if (data.user.rol === 'docente') {
-                    navigate('/docente');
-                }
-
-                else if (data.user.rol === 'estudiante') {
-                    navigate('/estudiante');
-                }
-
-            }, 1500);
-        }
-
+        setTimeout(() => {
+          if (data.user.rol === "administrativo") {
+            navigate("/admin");
+          } else if (data.user.rol === "docente") {
+            navigate("/docente");
+          } else if (data.user.rol === "estudiante") {
+            navigate("/estudiante");
+          }
+        }, 1500);
+      }
     } catch (error) {
-
-        console.error(error);
-
-        setShowModalError(true);
+      console.error("Error login:", error);
+      setShowModalError(true);
+    } finally {
+      setLoading(false);
     }
-};
+  };
 
-    const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
-    return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-        >
-            <ModalSuccess 
-                visible={showModal} 
-                message={`Bienvenido ${formData.username}`} 
-                onClose={() => setShowModal(false)} 
-            />
-            <ModalError 
-                visible={showModalError} 
-                message="Credenciales incorrectas o rol no seleccionado" 
-                onClose={() => setShowModalError(false)} 
-            />
+  return (
+    <>
+      <ModalSuccess
+        visible={showModal}
+        message={`Bienvenido ${formData.username}`}
+        onClose={() => setShowModal(false)}
+      />
 
-            <form onSubmit={handleSubmit}>
-                <motion.div initial={{ x: -100 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
-                    <h3>{titleForm}</h3>
-                </motion.div>
+      <ModalError
+        visible={showModalError}
+        message="Credenciales incorrectas o rol no seleccionado"
+        onClose={() => setShowModalError(false)}
+      />
 
-            <div className="form-container">
-                {/* Selector de ROL */}
-                <motion.div initial={{ x: -100 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
-                    <div className="text_area">
-                        <label>Rol:
-                            <select 
-                                className="text_input" 
-                                name="rol" 
-                                value={formData.rol} 
-                                onChange={handleChange} 
-                                required
-                                style={{ width: '100%', padding: '10px' }}
-                                >
-                                <option value="">Seleccione su rol</option>
-                                <option value="administrativo">Administrativo</option>
-                                <option value="docente">Docente</option>
-                                <option value="estudiante">Estudiante</option>
-                            </select>
-                        </label>
+      <div className="login-page">
+        <Container className="h-100 d-flex align-items-center justify-content-center">
+          <motion.div
+            className="login-wrapper"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Row className="g-0 login-card shadow-lg">
+              {/* LADO IZQUIERDO */}
+              <Col lg={6} className="welcome-panel d-none d-lg-flex">
+                <div className="welcome-content">
+                  <h1 className="welcome-title">WELCOME</h1>
+                  <h4 className="welcome-subtitle">Sistema de Evaluación Docente</h4>
+                  <p className="welcome-text">
+                    Plataforma institucional para la gestión, evaluación y
+                    seguimiento del desempeño docente de manera segura,
+                    moderna y eficiente.
+                  </p>
+                </div>
+
+                <div className="circle circle-1"></div>
+                <div className="circle circle-2"></div>
+                <div className="circle circle-3"></div>
+              </Col>
+
+              {/* LADO DERECHO */}
+              <Col lg={6} md={12} className="form-panel">
+                <div className="form-box">
+                  <div className="mb-4 text-center text-lg-start">
+                    <h2 className="signin-title">Sign in</h2>
+                    <p className="signin-subtitle">
+                      Accede con tu rol y tus credenciales del sistema
+                    </p>
+                  </div>
+
+                  <h5 className="system-title text-center mb-4 d-lg-none">
+                    {titleForm}
+                  </h5>
+
+                  <Form onSubmit={handleSubmit}>
+                    {/* ROL */}
+                    <Form.Group className="mb-3">
+                      <Form.Label className="custom-label">Rol</Form.Label>
+                      <InputGroup>
+                        <InputGroup.Text className="custom-input-icon">
+                          <BsShieldLockFill />
+                        </InputGroup.Text>
+                        <Form.Select
+                          name="rol"
+                          value={formData.rol}
+                          onChange={handleChange}
+                          required
+                          className="custom-input"
+                        >
+                          <option value="">Seleccione su rol</option>
+                          <option value="administrativo">Administrativo</option>
+                          <option value="docente">Docente</option>
+                          <option value="estudiante">Estudiante</option>
+                        </Form.Select>
+                      </InputGroup>
+                    </Form.Group>
+
+                    {/* EMAIL */}
+                    <Form.Group className="mb-3">
+                      <Form.Label className="custom-label">Correo electrónico</Form.Label>
+                      <InputGroup>
+                        <InputGroup.Text className="custom-input-icon">
+                          <BsPersonFill />
+                        </InputGroup.Text>
+                        <Form.Control
+                          type="email"
+                          name="username"
+                          value={formData.username}
+                          onChange={handleChange}
+                          placeholder="Ingrese su correo"
+                          required
+                          className="custom-input"
+                        />
+                      </InputGroup>
+                    </Form.Group>
+
+                    {/* PASSWORD */}
+                    <Form.Group className="mb-3">
+                      <Form.Label className="custom-label">Contraseña</Form.Label>
+                      <InputGroup>
+                        <InputGroup.Text className="custom-input-icon">
+                          <BsLockFill />
+                        </InputGroup.Text>
+                        <Form.Control
+                          type={showPassword ? "text" : "password"}
+                          name="password"
+                          value={formData.password}
+                          onChange={handleChange}
+                          placeholder="Ingrese su contraseña"
+                          required
+                          className="custom-input"
+                        />
+                        <Button
+                          type="button"
+                          variant="light"
+                          className="show-btn"
+                          onClick={togglePasswordVisibility}
+                        >
+                          {showPassword ? <BsEyeSlashFill /> : <BsEyeFill />}
+                        </Button>
+                      </InputGroup>
+                    </Form.Group>
+
+                    <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                      <Form.Check
+                        type="checkbox"
+                        label="Recordarme"
+                        className="remember-check"
+                      />
+                      <span className="forgot-link">¿Olvidaste tu contraseña?</span>
                     </div>
-                </motion.div>
 
-                {/* Username */}
-                <motion.div initial={{ x: -100 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
-                    <div className="text_area">
-                        <label>Username:
-                            <input 
-                                className="text_input" 
-                                type="text" 
-                                name="username" 
-                                value={formData.username} 
-                                onChange={handleChange} 
-                                required 
-                                />
-                        </label>
-                    </div>
-                </motion.div>
+                    <Button
+                      type="submit"
+                      className="login-btn w-100"
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <>
+                          <Spinner animation="border" size="sm" className="me-2" />
+                          Ingresando...
+                        </>
+                      ) : (
+                        "Iniciar sesión"
+                      )}
+                    </Button>
 
-                {/* Password */}
-                <motion.div initial={{ x: -100 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
-                    <div className="text_area">
-                        <label>Password:
-                            <input 
-                                className="text_input" 
-                                type={showPassword ? 'text' : 'password'} 
-                                name="password" 
-                                value={formData.password} 
-                                onChange={handleChange} 
-                                required 
-                                />
-                            <button type="button" onClick={togglePasswordVisibility} className="button-visibility">
-                                {showPassword ? 'Hide' : 'Show'}
-                            </button>
-                        </label>
+                    <div className="text-center mt-4">
+                      <small className="footer-text">
+                        © 2026 Sistema de Evaluación Docente
+                      </small>
                     </div>
-                </motion.div>
-
-                <motion.div initial={{ y: 100 }} animate={{ y: 0 }} transition={{ duration: 0.5 }}>
-                    <div >
-                        <button className="btn" type="submit">Login</button>
-                    </div>
-                </motion.div>
-            </div>
-            </form>
-        </motion.div>
-    );
+                  </Form>
+                </div>
+              </Col>
+            </Row>
+          </motion.div>
+        </Container>
+      </div>
+    </>
+  );
 };
 
 export default Think;
