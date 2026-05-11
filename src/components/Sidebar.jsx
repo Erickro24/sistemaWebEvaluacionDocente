@@ -5,7 +5,7 @@ const Sidebar = ({ links }) => {
     return (
         <div className="sidebar">
 
-            <h2>Panel</h2>
+            <h2>Informacion</h2>
 
             {
                 links.map((link, index) => (

@@ -31,7 +31,7 @@ const DashboardAdmin = () => {
     return (
         <div>
 
-            <h1>Dashboard Administrativo</h1>
+            <h1>Sistema de evaluacion docente</h1>
 
             <div className="cards-container">
 

@@ -208,10 +208,95 @@
   padding-left: 10px;
   border-radius: 5px;
 }
-.datos select{
-  width: 100px;
-  height: 30px;
+.select {
+  width: 300px;
+  height: 35px; /* Lo subí un poco para que el texto respire */
   font-size: 15px; 
-  padding-left: 10px;
   border-radius: 5px;
+  text-align: center; /* Intenta centrar el texto */
+  text-align-last: center; /* Esto fuerza el centrado en navegadores modernos */
+}
+/* ============================= */
+/* PÁGINA USUARIOS */
+/* ============================= */
+
+.usuarios-page {
+    width: 100%;
+    padding: 20px 40px;
+    background-color: #ffffff;
+}
+
+/* Card del formulario */
+.usuarios-card {
+    width: 100%;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    box-shadow: none;
+}
+
+.usuarios-card .card-header {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.usuarios-card .card-footer {
+    border-top: 1px solid #dee2e6;
+}
+
+/* Inputs estilo como la imagen */
+.usuarios-card .input-group-text {
+    min-width: 130px;
+    font-weight: 600;
+    background-color: #e9ecef;
+}
+
+.usuarios-card .form-control,
+.usuarios-card .form-select {
+    height: 48px;
+    font-size: 16px;
+}
+
+/* Tabla */
+.usuarios-table {
+    width: 100%;
+    font-size: 16px;
+}
+
+.usuarios-table thead th {
+    font-weight: 700;
+    border-bottom: 2px solid #dee2e6;
+    padding: 14px 10px;
+}
+
+.usuarios-table tbody td {
+    padding: 14px 10px;
+}
+
+.usuarios-table tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+.usuarios-table .btn {
+    min-width: 75px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .usuarios-page {
+        padding: 15px;
+    }
+
+    .usuarios-card .input-group {
+        flex-direction: column;
+    }
+
+    .usuarios-card .input-group-text {
+        width: 100%;
+        border-radius: 6px 6px 0 0;
+    }
+
+    .usuarios-card .form-control,
+    .usuarios-card .form-select {
+        width: 100%;
+        border-radius: 0 0 6px 6px;
+    }
 }
