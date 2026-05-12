@@ -111,12 +111,10 @@ import "./login.css";
               {/* LADO IZQUIERDO */}
               <Col lg={6} className="welcome-panel d-none d-lg-flex">
                 <div className="welcome-content">
-                  <h1 className="welcome-title">WELCOME</h1>
+                  <h1 className="welcome-title">BIENVENIDO</h1>
+                  <h2>al</h2>
                   <h4 className="welcome-subtitle">Sistema de Evaluación Docente</h4>
                   <p className="welcome-text">
-                    Plataforma institucional para la gestión, evaluación y
-                    seguimiento del desempeño docente de manera segura,
-                    moderna y eficiente.
                   </p>
                 </div>
 
@@ -129,9 +127,8 @@ import "./login.css";
               <Col lg={6} md={12} className="form-panel">
                 <div className="form-box">
                   <div className="mb-4 text-center text-lg-start">
-                    <h2 className="signin-title">Sign in</h2>
+                    <h2 className="signin-title">Login</h2>
                     <p className="signin-subtitle">
-                      Accede con tu rol y tus credenciales del sistema
                     </p>
                   </div>
 
@@ -207,15 +204,15 @@ import "./login.css";
                         </Button>
                       </InputGroup>
                     </Form.Group>
-
-                    <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                     {/* recordarme y olvidaste contrasenia */}
+                    {/* <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
                       <Form.Check
                         type="checkbox"
                         label="Recordarme"
                         className="remember-check"
                       />
                       <span className="forgot-link">¿Olvidaste tu contraseña?</span>
-                    </div>
+                    </div> */}
 
                     <Button
                       type="submit"
@@ -232,11 +229,11 @@ import "./login.css";
                       )}
                     </Button>
 
-                    <div className="text-center mt-4">
+                    {/* <div className="text-center mt-4">
                       <small className="footer-text">
-                        © 2026 Sistema de Evaluación Docente
+                        © 2026 Sistema de Evaluación Docente - Escuela Maritima www.esma.edu.bo
                       </small>
-                    </div>
+                    </div> */}
                   </Form>
                 </div>
               </Col>
