@@ -4,9 +4,8 @@ import UserNav from "../Forms/UserNav.jsx";
 const Navigator = () => {
   return (
     <nav className="navbar">
-      <Link to="/login" className="nav-link">acceso</Link>
-      <Link to="/home" className="nav-link">Hogar</Link>
-      <Link to="/contactos" className="nav-link">Contactos</Link>
+      <Link to="/login" className="nav-link"></Link>
+
 
       <div className="nav-user">
         <UserNav />

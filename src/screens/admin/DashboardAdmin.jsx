@@ -1,34 +1,15 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 
 import {
   FaUsers,
   FaUserGraduate,
   FaChalkboardTeacher,
-  FaHome,
   FaChartBar,
-  FaFileAlt,
-  FaCog,
-  FaSignOutAlt,
-  FaSearch,
-  FaBell,
-  FaUserCircle,
-  FaDatabase,
-  FaClipboardList,
-  FaMoon,
-  FaSun
+  FaClipboardList
 } from "react-icons/fa";
 
-import "./dashboardAdmin.css";
-
 const DashboardAdmin = () => {
-  const navigate = useNavigate();
-
-  const [theme, setTheme] = useState(
-    localStorage.getItem("dashboardTheme") || "dark"
-  );
-
   const [stats, setStats] = useState({
     usuarios: 0,
     docentes: 0,
@@ -50,216 +31,100 @@ const DashboardAdmin = () => {
     fetchDashboard();
   }, []);
 
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-
-    setTheme(newTheme);
-    localStorage.setItem("dashboardTheme", newTheme);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/login");
-  };
-
   return (
-    <div
-      className={`admin-dashboard ${
-        theme === "light" ? "light-theme" : "dark-theme"
-      }`}
-    >
-      {/* SIDEBAR */}
-      <aside className="admin-sidebar">
-        <div>
-          <div className="sidebar-brand">
-            <div className="brand-icon">
-              <FaDatabase />
-            </div>
+    <>
+      <div className="welcome-card">
+        <h1>Hola, {user?.nombre || "Administrador"} 👋</h1>
 
-            <div>
-              <h3>ESMA</h3>
-              <span>Evaluación Docente</span>
-            </div>
+        <p>
+          Panel administrativo del Sistema Web de Evaluación Docente basado en
+          Machine Learning.
+        </p>
+      </div>
+
+      <div className="stats-grid">
+        <div className="stat-card">
+          <div className="stat-icon users">
+            <FaUsers />
           </div>
 
-          <nav className="sidebar-menu">
-            <button className="sidebar-item active">
-              <FaHome />
-              Dashboard
-            </button>
+          <h3>Usuarios registrados</h3>
 
-            <button
-              className="sidebar-item"
-              onClick={() => navigate("/admin/usuarios")}
-            >
-              <FaUsers />
-              Usuarios
-            </button>
+          <p className="stat-number">{stats.usuarios}</p>
 
-            <button
-              className="sidebar-item"
-              onClick={() => navigate("/admin/docentes")}
-            >
-              <FaChalkboardTeacher />
-              Docentes
-            </button>
-
-            <button
-              className="sidebar-item"
-              onClick={() => navigate("/admin/reportes")}
-            >
-              <FaFileAlt />
-              Reportes
-            </button>
-
-            <button className="sidebar-item">
-              <FaChartBar />
-              KPI / ML
-            </button>
-
-            <button
-              className="sidebar-item"
-              onClick={() => navigate("/admin/configuracion")}
-            >
-              <FaCog />
-              Configuración
-            </button>
-          </nav>
+          <span>Administrativos, docentes y estudiantes</span>
         </div>
 
-        <button className="sidebar-logout" onClick={handleLogout}>
-          <FaSignOutAlt />
-          Cerrar sesión
-        </button>
-      </aside>
-
-      {/* MAIN */}
-      <main className="admin-main">
-        {/* TOPBAR */}
-        <header className="admin-topbar">
-          <div className="search-box">
-            <FaSearch />
-            <input type="text" placeholder="Buscar en el sistema..." />
+        <div className="stat-card">
+          <div className="stat-icon teachers">
+            <FaChalkboardTeacher />
           </div>
 
-          <div className="topbar-actions">
-            <button
-              className="icon-btn"
-              onClick={toggleTheme}
-              title={theme === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
-            >
-              {theme === "dark" ? <FaSun /> : <FaMoon />}
-            </button>
+          <h3>Docentes</h3>
 
-            <button className="icon-btn">
-              <FaBell />
-            </button>
+          <p className="stat-number">{stats.docentes}</p>
 
-            <div className="user-chip">
-              <FaUserCircle />
-              {user?.nombre || "Administrador"}
-            </div>
-          </div>
-        </header>
+          <span>Docentes activos en el sistema</span>
+        </div>
 
-        {/* CONTENT */}
-        <section className="dashboard-content">
-          <div className="welcome-card">
-            <h1>Hola, {user?.nombre || "Administrador"} 👋</h1>
-
-            <p>
-              Panel administrativo del Sistema Web de Evaluación Docente basado
-              en Machine Learning.
-            </p>
+        <div className="stat-card">
+          <div className="stat-icon students">
+            <FaUserGraduate />
           </div>
 
-          <div className="stats-grid">
-            <div className="stat-card">
-              <div className="stat-icon users">
-                <FaUsers />
-              </div>
+          <h3>Estudiantes</h3>
 
-              <h3>Usuarios registrados</h3>
+          <p className="stat-number">{stats.estudiantes}</p>
 
-              <p className="stat-number">{stats.usuarios}</p>
+          <span>Estudiantes habilitados para evaluar</span>
+        </div>
+      </div>
 
-              <span>Administrativos, docentes y estudiantes</span>
-            </div>
-
-            <div className="stat-card">
-              <div className="stat-icon teachers">
-                <FaChalkboardTeacher />
-              </div>
-
-              <h3>Docentes</h3>
-
-              <p className="stat-number">{stats.docentes}</p>
-
-              <span>Docentes activos en el sistema</span>
-            </div>
-
-            <div className="stat-card">
-              <div className="stat-icon students">
-                <FaUserGraduate />
-              </div>
-
-              <h3>Estudiantes</h3>
-
-              <p className="stat-number">{stats.estudiantes}</p>
-
-              <span>Estudiantes habilitados para evaluar</span>
-            </div>
+      <div className="dashboard-panels">
+        <div className="panel-card">
+          <div className="panel-header">
+            <FaClipboardList />
+            <h3>Evaluaciones recientes</h3>
           </div>
 
-          <div className="dashboard-panels">
-            <div className="panel-card">
-              <div className="panel-header">
+          <div className="panel-body">
+            <div>
+              <div className="panel-empty-icon">
                 <FaClipboardList />
-                <h3>Evaluaciones recientes</h3>
               </div>
 
-              <div className="panel-body">
-                <div>
-                  <div className="panel-empty-icon">
-                    <FaClipboardList />
-                  </div>
+              <h4>Sin evaluaciones recientes</h4>
 
-                  <h4>Sin evaluaciones recientes</h4>
-
-                  <p>
-                    Aquí se mostrarán las últimas evaluaciones docentes
-                    registradas.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="panel-card">
-              <div className="panel-header">
-                <FaChartBar />
-                <h3>Resumen KPI / ML</h3>
-              </div>
-
-              <div className="panel-body">
-                <div>
-                  <div className="panel-empty-icon">
-                    <FaChartBar />
-                  </div>
-
-                  <h4>Sin predicciones disponibles</h4>
-
-                  <p>
-                    Aquí se visualizarán los indicadores KPI y resultados del
-                    modelo de árbol de decisión.
-                  </p>
-                </div>
-              </div>
+              <p>
+                Aquí se mostrarán las últimas evaluaciones docentes registradas.
+              </p>
             </div>
           </div>
-        </section>
-      </main>
-    </div>
+        </div>
+
+        <div className="panel-card">
+          <div className="panel-header">
+            <FaChartBar />
+            <h3>Resumen KPI / ML</h3>
+          </div>
+
+          <div className="panel-body">
+            <div>
+              <div className="panel-empty-icon">
+                <FaChartBar />
+              </div>
+
+              <h4>Sin predicciones disponibles</h4>
+
+              <p>
+                Aquí se visualizarán los indicadores KPI y resultados del modelo
+                de árbol de decisión.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

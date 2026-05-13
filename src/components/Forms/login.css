@@ -37,6 +37,7 @@
 }
 
 .welcome-title {
+  text-align: center;
   font-size: 3rem;
   font-weight: 800;
   letter-spacing: 2px;
@@ -44,6 +45,7 @@
 }
 
 .welcome-subtitle {
+  text-align: center;
   font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 18px;

@@ -112,8 +112,8 @@ import "./login.css";
               <Col lg={6} className="welcome-panel d-none d-lg-flex">
                 <div className="welcome-content">
                   <h1 className="welcome-title">BIENVENIDO</h1>
-                  <h2>al</h2>
-                  <h4 className="welcome-subtitle">Sistema de Evaluación Docente</h4>
+                  <h2 className="welcome-subtitle">al</h2>
+                  <h3 className="welcome-subtitle">Sistema de Evaluación Docente</h3>
                   <p className="welcome-text">
                   </p>
                 </div>

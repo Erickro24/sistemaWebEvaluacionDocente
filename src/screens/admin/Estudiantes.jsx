@@ -4,8 +4,8 @@ import api from '../../api/axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../App.css';
 
-const Docentes = () => {
-    const [docentes, setDocentes] = useState([]);
+const Estudiantes = () => {
+    const [estudiantes, setEstudiantes] = useState([]);
 
     const [formData, setFormData] = useState({
         nombre: '',
@@ -13,31 +13,31 @@ const Docentes = () => {
         email: '',
         password: '',
         estado: 'ACTIVO',
-        especialidad: '',
-        grado_academico: '',
-        experiencia_anios: ''
+        ru: '',
+        carrera: '',
+        semestre: ''
     });
 
     const [editando, setEditando] = useState(false);
     const [idEditar, setIdEditar] = useState(null);
 
-    const fetchDocentes = async () => {
+    const fetchEstudiantes = async () => {
         try {
-            const response = await api.get('/admin/docentes');
-            setDocentes(response.data.docentes);
+            const response = await api.get('/admin/estudiantes');
+            setEstudiantes(response.data.estudiantes);
         } catch (error) {
             console.error(error);
 
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'No se pudieron cargar los docentes'
+                text: 'No se pudieron cargar los estudiantes'
             });
         }
     };
 
     useEffect(() => {
-        fetchDocentes();
+        fetchEstudiantes();
     }, []);
 
     const handleChange = (e) => {
@@ -54,9 +54,9 @@ const Docentes = () => {
             email: '',
             password: '',
             estado: 'ACTIVO',
-            especialidad: '',
-            grado_academico: '',
-            experiencia_anios: ''
+            ru: '',
+            carrera: '',
+            semestre: ''
         });
 
         setEditando(false);
@@ -68,25 +68,25 @@ const Docentes = () => {
 
         try {
             if (editando) {
-                await api.put(`/admin/docentes/${idEditar}`, formData);
+                await api.put(`/admin/estudiantes/${idEditar}`, formData);
 
                 Swal.fire({
                     icon: 'success',
-                    title: 'Docente actualizado',
-                    text: `El docente ${formData.nombre} fue actualizado correctamente`
+                    title: 'Estudiante actualizado',
+                    text: `El estudiante ${formData.nombre} fue actualizado correctamente`
                 });
 
             } else {
-                await api.post('/admin/docentes', formData);
+                await api.post('/admin/estudiantes', formData);
 
                 Swal.fire({
                     icon: 'success',
                     title: 'Registro exitoso',
-                    html: `El docente <b>${formData.nombre}</b> fue registrado correctamente`
+                    html: `El estudiante <b>${formData.nombre}</b> fue registrado correctamente`
                 });
             }
 
-            fetchDocentes();
+            fetchEstudiantes();
             limpiarFormulario();
 
         } catch (error) {
@@ -95,24 +95,24 @@ const Docentes = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: error.response?.data?.message || 'Ocurrió un error al guardar el docente'
+                text: error.response?.data?.message || 'Ocurrió un error al guardar el estudiante'
             });
         }
     };
 
-    const handleEdit = (docente) => {
+    const handleEdit = (estudiante) => {
         setEditando(true);
-        setIdEditar(docente.id_usuario);
+        setIdEditar(estudiante.id_usuario);
 
         setFormData({
-            nombre: docente.nombre || '',
-            apellido: docente.apellido || '',
-            email: docente.email || '',
+            nombre: estudiante.nombre || '',
+            apellido: estudiante.apellido || '',
+            email: estudiante.email || '',
             password: '',
-            estado: docente.estado || 'ACTIVO',
-            especialidad: docente.especialidad || '',
-            grado_academico: docente.grado_academico || '',
-            experiencia_anios: docente.experiencia_anios || ''
+            estado: estudiante.estado || 'ACTIVO',
+            ru: estudiante.ru || '',
+            carrera: estudiante.carrera || '',
+            semestre: estudiante.semestre || ''
         });
 
         window.scrollTo({
@@ -125,11 +125,11 @@ const Docentes = () => {
         limpiarFormulario();
     };
 
-    const handleDelete = async (docente) => {
+    const handleDelete = async (estudiante) => {
         const result = await Swal.fire({
             icon: 'warning',
             title: '¿Confirmar eliminado?',
-            html: `¿Realmente desea eliminar a <b>${docente.nombre} ${docente.apellido}</b>?`,
+            html: `¿Realmente desea eliminar a <b>${estudiante.nombre} ${estudiante.apellido}</b>?`,
             showCancelButton: true,
             confirmButtonText: 'Sí, eliminar',
             cancelButtonText: 'Cancelar',
@@ -139,14 +139,14 @@ const Docentes = () => {
 
         if (result.isConfirmed) {
             try {
-                await api.delete(`/admin/docentes/${docente.id_usuario}`);
+                await api.delete(`/admin/estudiantes/${estudiante.id_usuario}`);
 
-                fetchDocentes();
+                fetchEstudiantes();
 
                 Swal.fire({
                     icon: 'success',
                     title: 'Eliminado',
-                    text: 'El docente fue eliminado correctamente'
+                    text: 'El estudiante fue eliminado correctamente'
                 });
 
             } catch (error) {
@@ -155,7 +155,7 @@ const Docentes = () => {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'No se pudo eliminar el docente'
+                    text: 'No se pudo eliminar el estudiante'
                 });
             }
         }
@@ -181,7 +181,7 @@ const Docentes = () => {
 
                     <div className="card-header text-center bg-light">
                         <h4 className="mb-0 fw-bold">
-                            GESTIÓN DE DOCENTES
+                            GESTIÓN DE ESTUDIANTES
                         </h4>
                     </div>
 
@@ -244,41 +244,39 @@ const Docentes = () => {
                         </div>
 
                         <div className="input-group mb-4">
-                            <span className="input-group-text">Especialidad:</span>
+                            <span className="input-group-text">RU:</span>
                             <input
                                 type="text"
-                                name="especialidad"
+                                name="ru"
                                 className="form-control"
-                                placeholder="Ingrese especialidad"
-                                value={formData.especialidad}
+                                placeholder="Ingrese RU del estudiante"
+                                value={formData.ru}
+                                onChange={handleChange}
+                            />
+                        </div>
+
+                        <div className="input-group mb-4">
+                            <span className="input-group-text">Carrera:</span>
+                            <input
+                                type="text"
+                                name="carrera"
+                                className="form-control"
+                                placeholder="Ingrese carrera"
+                                value={formData.carrera}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
 
                         <div className="input-group mb-4">
-                            <span className="input-group-text">Grado Académico:</span>
+                            <span className="input-group-text">Semestre:</span>
                             <input
                                 type="text"
-                                name="grado_academico"
+                                name="semestre"
                                 className="form-control"
-                                placeholder="Ingrese grado académico"
-                                value={formData.grado_academico}
+                                placeholder="Ingrese semestre"
+                                value={formData.semestre}
                                 onChange={handleChange}
-                                required
-                            />
-                        </div>
-
-                        <div className="input-group mb-4">
-                            <span className="input-group-text">Experiencia:</span>
-                            <input
-                                type="number"
-                                name="experiencia_anios"
-                                className="form-control"
-                                placeholder="Años de experiencia"
-                                value={formData.experiencia_anios}
-                                onChange={handleChange}
-                                min="0"
                                 required
                             />
                         </div>
@@ -334,9 +332,9 @@ const Docentes = () => {
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Email</th>
-                            <th>Especialidad</th>
-                            <th>Grado</th>
-                            <th>Experiencia</th>
+                            <th>RU</th>
+                            <th>Carrera</th>
+                            <th>Semestre</th>
                             <th>Estado</th>
                             <th>Fecha Registro</th>
                             <th className="text-center">Acciones</th>
@@ -345,42 +343,42 @@ const Docentes = () => {
 
                     <tbody>
                         {
-                            docentes.length > 0 ? (
-                                docentes.map((docente) => (
-                                    <tr key={docente.id_usuario}>
-                                        <td className="fw-bold">{docente.id_usuario}</td>
-                                        <td>{docente.nombre}</td>
-                                        <td>{docente.apellido}</td>
-                                        <td>{docente.email}</td>
-                                        <td>{docente.especialidad}</td>
-                                        <td>{docente.grado_academico}</td>
-                                        <td>{docente.experiencia_anios} años</td>
+                            estudiantes.length > 0 ? (
+                                estudiantes.map((estudiante) => (
+                                    <tr key={estudiante.id_usuario}>
+                                        <td className="fw-bold">{estudiante.id_usuario}</td>
+                                        <td>{estudiante.nombre}</td>
+                                        <td>{estudiante.apellido}</td>
+                                        <td>{estudiante.email}</td>
+                                        <td>{estudiante.ru || 'Sin RU'}</td>
+                                        <td>{estudiante.carrera}</td>
+                                        <td>{estudiante.semestre}</td>
 
                                         <td>
                                             <span
                                                 className={`badge ${
-                                                    docente.estado === 'ACTIVO'
+                                                    estudiante.estado === 'ACTIVO'
                                                         ? 'bg-success'
                                                         : 'bg-danger'
                                                 }`}
                                             >
-                                                {docente.estado}
+                                                {estudiante.estado}
                                             </span>
                                         </td>
 
-                                        <td>{formatearFecha(docente.fecha_registro)}</td>
+                                        <td>{formatearFecha(estudiante.fecha_registro)}</td>
 
                                         <td className="text-center">
                                             <button
                                                 className="btn btn-info btn-sm text-white me-2"
-                                                onClick={() => handleEdit(docente)}
+                                                onClick={() => handleEdit(estudiante)}
                                             >
                                                 Editar
                                             </button>
 
                                             <button
                                                 className="btn btn-danger btn-sm"
-                                                onClick={() => handleDelete(docente)}
+                                                onClick={() => handleDelete(estudiante)}
                                             >
                                                 Eliminar
                                             </button>
@@ -390,7 +388,7 @@ const Docentes = () => {
                             ) : (
                                 <tr>
                                     <td colSpan="10" className="text-center text-muted py-4">
-                                        No hay docentes registrados
+                                        No hay estudiantes registrados
                                     </td>
                                 </tr>
                             )
@@ -403,4 +401,4 @@ const Docentes = () => {
     );
 };
 
-export default Docentes;
+export default Estudiantes;
