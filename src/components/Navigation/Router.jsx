@@ -25,7 +25,22 @@ import Reportes from "../../screens/admin/Reportes.jsx";
 import Configuracion from "../../screens/admin/Configuracion.jsx";
 
 import DashboardDocente from "../../screens/docente/DashboardDocente.jsx";
+import Perfil from "../../screens/docente/Perfil.jsx";
+import MisMaterias from "../../screens/docente/MisMaterias.jsx";
+import Autoevaluacion from "../../screens/docente/Autoevaluacion.jsx";
+import MisEvaluaciones from "../../screens/docente/MisEvaluaciones.jsx";
+import KpiMl2 from "../../screens/docente/kpiMl2.jsx";
+import PrediccionML from "../../screens/docente/PrediccionML.jsx";
+import Recomendaciones from "../../screens/docente/Recomendaciones.jsx";
+import Historial from "../../screens/docente/Historial.jsx";
+
+
 import DashboardEstudiante from "../../screens/estudiante/DashboardEstudiante.jsx";
+import PerfilEstudiante from "../../screens/estudiante/PerfilEstudiante.jsx";
+import EvaluarDocente from "../../screens/estudiante/EvaluarDocente.jsx";
+import HistorialEstudiante from "../../screens/estudiante/HistorialEstudiante.jsx";
+import MisMateriasEstudiante from "../../screens/estudiante/MisMateriasEstudiante.jsx";
+
 
 const Router = () => {
   const location = useLocation();
@@ -42,7 +57,7 @@ const Router = () => {
 
       <Routes>
         {/* RUTAS PÚBLICAS */}
-        <Route path="/" element={<Navigate to="/" />} />
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
 
         {/* ADMIN */}
@@ -77,7 +92,15 @@ const Router = () => {
           }
         >
           <Route index element={<DashboardDocente />} />
-        </Route>
+            <Route path="perfil" element={<Perfil />} />
+            <Route path="materias" element={<MisMaterias />} />
+            <Route path="autoevaluacion" element={<Autoevaluacion />} />
+            <Route path="evaluaciones" element={<MisEvaluaciones />} />
+            <Route path="kpi2" element={<KpiMl2 />} />
+            <Route path="prediccion" element={<PrediccionML />} />
+            <Route path="recomendaciones" element={<Recomendaciones />} />
+            <Route path="historial" element={<Historial />} />
+          </Route>
 
         {/* ESTUDIANTE */}
         <Route
@@ -89,6 +112,10 @@ const Router = () => {
           }
         >
           <Route index element={<DashboardEstudiante />} />
+          <Route path="perfil" element={<PerfilEstudiante />} />
+          <Route path="mismaterias" element={<MisMateriasEstudiante />} />
+          <Route path="evaluar-docente" element={<EvaluarDocente />} />
+          <Route path="historial" element={<HistorialEstudiante />} />
         </Route>
 
         {/* RUTA NO ENCONTRADA */}

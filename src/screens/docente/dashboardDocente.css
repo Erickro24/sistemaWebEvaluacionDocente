@@ -1,0 +1,451 @@
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.docente-dashboard.dark-theme {
+  --bg-main: #111217;
+  --bg-sidebar: #172337;
+  --bg-topbar: #15161c;
+  --bg-card: #242631;
+  --bg-card-secondary: #1c1d25;
+  --bg-input: #242631;
+
+  --text-main: #ffffff;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+
+  --border-color: #2f3140;
+  --hover-color: #0f172a;
+}
+
+.docente-dashboard.light-theme {
+  --bg-main: #f4f7fb;
+  --bg-sidebar: #ffffff;
+  --bg-topbar: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-secondary: #eef4ff;
+  --bg-input: #f1f5f9;
+
+  --text-main: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+
+  --border-color: #e2e8f0;
+  --hover-color: #eef4ff;
+}
+
+.docente-dashboard {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  background: var(--bg-main);
+  color: var(--text-main);
+  overflow-x: hidden;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+/* SIDEBAR */
+.docente-sidebar {
+  width: 285px;
+  min-height: 100vh;
+  background: var(--bg-sidebar);
+  color: var(--text-main);
+  border-right: 1px solid var(--border-color);
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.docente-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 35px;
+}
+
+.docente-brand-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #2563eb, #06b6d4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 22px;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.3);
+}
+
+.docente-brand h3 {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0;
+  color: var(--text-main);
+}
+
+.docente-brand span {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.docente-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.docente-menu-item {
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 13px 16px;
+  border-radius: 13px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  transition: 0.25s ease;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.docente-menu-item:hover,
+.docente-menu-item.active {
+  background: var(--hover-color);
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.docente-dashboard.light-theme .docente-menu-item.active,
+.docente-dashboard.light-theme .docente-menu-item:hover {
+  background: #eef4ff;
+  color: #2563eb;
+}
+
+.docente-logout {
+  border: none;
+  background: rgba(239, 68, 68, 0.14);
+  color: #fecaca;
+  padding: 13px 16px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.docente-logout:hover {
+  background: rgba(239, 68, 68, 0.25);
+}
+
+.docente-dashboard.light-theme .docente-logout {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.docente-dashboard.light-theme .docente-logout:hover {
+  background: #fecaca;
+}
+
+/* MAIN */
+.docente-main {
+  flex: 1;
+  min-width: 0;
+  min-height: 100vh;
+  background: var(--bg-main);
+}
+
+.docente-topbar {
+  height: 78px;
+  background: var(--bg-topbar);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+}
+
+.docente-search-box {
+  width: 410px;
+  max-width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  color: var(--text-muted);
+}
+
+.docente-search-box input {
+  width: 100%;
+  height: 46px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text-main);
+  margin-left: 10px;
+}
+
+.docente-search-box input::placeholder {
+  color: var(--text-muted);
+}
+
+.docente-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.docente-icon-btn {
+  width: 43px;
+  height: 43px;
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-input);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.docente-icon-btn:hover {
+  transform: translateY(-2px);
+}
+
+.docente-user-chip {
+  background: var(--bg-input);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 9px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+
+/* CONTENT */
+.docente-content {
+  min-height: calc(100vh - 78px);
+  padding: 28px 32px;
+  background: var(--bg-main);
+}
+
+/* DASHBOARD */
+.docente-welcome-card {
+  background: linear-gradient(135deg, var(--bg-card), var(--bg-card-secondary));
+  border: 1px solid var(--border-color);
+  border-radius: 22px;
+  padding: 34px;
+  margin-bottom: 28px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+}
+
+.docente-welcome-card h1 {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--text-main);
+}
+
+.docente-welcome-card p {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.docente-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+  margin-bottom: 30px;
+}
+
+.docente-stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 26px;
+  min-height: 165px;
+  transition: 0.25s ease;
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.14);
+}
+
+.docente-stat-card:hover {
+  transform: translateY(-5px);
+  border-color: #2563eb;
+}
+
+.docente-stat-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  margin-bottom: 18px;
+}
+
+.docente-stat-icon.materias {
+  background: rgba(37, 99, 235, 0.18);
+  color: #60a5fa;
+}
+
+.docente-stat-icon.evaluaciones {
+  background: rgba(34, 197, 94, 0.18);
+  color: #86efac;
+}
+
+.docente-stat-icon.kpi {
+  background: rgba(168, 85, 247, 0.18);
+  color: #c084fc;
+}
+
+.docente-stat-icon.ml {
+  background: rgba(6, 182, 212, 0.18);
+  color: #67e8f9;
+}
+
+.docente-stat-icon.desempeno {
+  background: rgba(245, 158, 11, 0.18);
+  color: #fbbf24;
+}
+
+.docente-stat-icon.probabilidad {
+  background: rgba(239, 68, 68, 0.18);
+  color: #fca5a5;
+}
+
+.docente-stat-card h3 {
+  color: var(--text-main);
+  font-size: 17px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.docente-stat-number {
+  font-size: 34px;
+  font-weight: 800;
+  margin: 0;
+  color: var(--text-main);
+}
+
+.docente-stat-card span {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.docente-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+}
+
+.docente-panel-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  min-height: 285px;
+  overflow: hidden;
+}
+
+.docente-panel-header {
+  padding: 22px 26px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.docente-panel-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.docente-panel-body {
+  min-height: 215px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 20px;
+}
+
+.docente-panel-empty-icon {
+  font-size: 58px;
+  opacity: 0.45;
+  margin-bottom: 12px;
+}
+
+.docente-module-page {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 28px;
+  color: var(--text-main);
+  min-height: 350px;
+}
+
+.docente-module-page h1 {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.docente-module-page p {
+  color: var(--text-muted);
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .docente-sidebar {
+    display: none;
+  }
+
+  .docente-stats-grid,
+  .docente-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .docente-topbar {
+    padding: 0 18px;
+  }
+
+  .docente-content {
+    padding: 22px 18px;
+  }
+
+  .docente-search-box {
+    width: 260px;
+  }
+}
+
+@media (max-width: 576px) {
+  .docente-topbar-actions {
+    display: none;
+  }
+
+  .docente-welcome-card h1 {
+    font-size: 24px;
+  }
+
+  .docente-stat-number {
+    font-size: 28px;
+  }
+}

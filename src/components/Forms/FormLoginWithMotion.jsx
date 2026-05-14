@@ -45,44 +45,52 @@ import "./login.css";
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      const response = await axios.post("http://localhost:4000/api/auth/login", {
-        email: formData.username,
-        password: formData.password,
-        rol: formData.rol
-      });
+  try {
+    const response = await axios.post("http://localhost:4000/api/auth/login", {
+      email: formData.username,
+      password: formData.password,
+      rol: formData.rol
+    });
 
-      const data = response.data;
+    const data = response.data;
 
-      if (data.success) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
+    console.log("RESPUESTA LOGIN:", data);
+    console.log("ROL RECIBIDO:", data.user?.rol);
 
-        dispatch(login());
-        setShowModal(true);
+    if (data.success) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("rol", data.user.rol);
 
-        setTimeout(() => {
-          if (data.user.rol === "administrativo") {
-            navigate("/admin");
-          } else if (data.user.rol === "docente") {
-            navigate("/docente");
-          } else if (data.user.rol === "estudiante") {
-            navigate("/estudiante");
-          }
-        }, 1500);
-      }
-    } catch (error) {
-      console.error("Error login:", error);
-      setShowModalError(true);
-    } finally {
-      setLoading(false);
+      dispatch(login());
+      setShowModal(true);
+
+      setTimeout(() => {
+        const rol = data.user.rol?.toLowerCase();
+
+        if (rol === "administrativo" || rol === "administrador") {
+          navigate("/admin", { replace: true });
+        } else if (rol === "docente") {
+          navigate("/docente", { replace: true });
+        } else if (rol === "estudiante") {
+          navigate("/estudiante", { replace: true });
+        } else {
+          console.error("Rol no reconocido:", rol);
+          setShowModalError(true);
+        }
+      }, 1500);
     }
-  };
-
+  } catch (error) {
+    console.error("Error login:", error);
+    setShowModalError(true);
+  } finally {
+    setLoading(false);
+  }
+};
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   return (
